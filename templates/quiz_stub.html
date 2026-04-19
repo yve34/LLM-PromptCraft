@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}PromptCraft — {{ heading }}{% endblock %}
+{% block nav_right %}Quiz{% endblock %}
+
+{% block content %}
+<section class="pc-stub">
+    <h1>{{ heading }}</h1>
+    <p>{{ body }}</p>
+    <a href="{{ cta_url }}" class="btn btn-pc-primary">{{ cta_label }} &rarr;</a>
+</section>
+{% endblock %}

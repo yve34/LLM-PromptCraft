@@ -1,0 +1,404 @@
+/* ==========================================================================
+   PromptCraft — HW10 Technical Prototype styles
+   HW10 focuses on basic functionality; HW11 is where graphic design is
+   polished, so these styles are intentionally minimal but faithful to the
+   Lo-Fi prototype (navy header, pill buttons, colored RCTF accents).
+   ========================================================================== */
+
+:root {
+    --pc-navy:    #0f2646;
+    --pc-bg:      #eef1f8;
+    --pc-blue:    #2b44f0;
+    --pc-green:   #1e7a44;
+    --pc-red:     #b33024;
+    --pc-yellow:  #e9c83b;
+
+    --pc-role:    #5581f0;
+    --pc-role-bg: #d9e4fb;
+    --pc-ctx:     #3bb48a;
+    --pc-ctx-bg:  #d7f0e3;
+    --pc-task:    #df5a5a;
+    --pc-task-bg: #fadcdc;
+    --pc-fmt:     #e4b823;
+    --pc-fmt-bg:  #fbf2c8;
+}
+
+html, body {
+    background: var(--pc-bg);
+    color: #1a1f2e;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Navbar */
+.pc-navbar {
+    background: var(--pc-navy);
+    color: #fff;
+    min-height: 56px;
+}
+.pc-brand, .pc-brand:hover {
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+}
+.pc-navbar-right {
+    color: rgba(255,255,255,0.85);
+    font-size: 0.95rem;
+}
+
+/* Main container */
+.pc-main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 24px 56px 24px;
+}
+
+.pc-header-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.pc-title {
+    font-weight: 700;
+    color: var(--pc-navy);
+    margin-bottom: 4px;
+}
+.pc-subtitle {
+    color: #516077;
+    margin-bottom: 24px;
+}
+
+/* Primary button (navy/blue pill) */
+.btn-pc-primary {
+    background: var(--pc-blue);
+    color: #fff;
+    font-weight: 600;
+    padding: 14px 28px;
+    border-radius: 6px;
+    border: none;
+    font-size: 1.05rem;
+}
+.btn-pc-primary:hover { background: #1e33c8; color: #fff; }
+
+.btn-pc-success {
+    background: var(--pc-green);
+    color: #fff;
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: 6px;
+    border: none;
+}
+.btn-pc-success:hover { background: #175f34; color: #fff; }
+
+/* ---------- Home / Welcome ---------- */
+.pc-welcome {
+    text-align: center;
+    padding: 48px 24px;
+}
+.pc-welcome h1 {
+    font-size: 2.75rem;
+    font-weight: 800;
+    color: var(--pc-navy);
+}
+.pc-welcome .lead {
+    color: #4b5668;
+    max-width: 640px;
+    margin: 12px auto 32px auto;
+}
+.pc-chiprow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 32px;
+}
+.pc-chip {
+    background: #dde5fa;
+    border: 1px solid #c2cef0;
+    padding: 10px 20px;
+    border-radius: 4px;
+    color: #324a80;
+    font-size: 0.95rem;
+}
+
+/* ---------- Lesson 1 — wasted prompts ---------- */
+.pc-wasted-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+.pc-wasted-card {
+    background: #fff;
+    border-top: 5px solid var(--pc-red);
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    min-height: 240px;
+}
+.pc-wasted-card .prompt {
+    color: var(--pc-red);
+    font-style: italic;
+    font-weight: 600;
+    padding: 22px 20px 8px 20px;
+}
+.pc-wasted-card .result {
+    padding: 6px 20px 20px 20px;
+    flex: 1;
+}
+.pc-wasted-card .badge-wasted {
+    background: var(--pc-red);
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    font-weight: 600;
+    margin-top: auto;
+}
+.pc-wasted-footer {
+    margin-top: 32px;
+    font-style: italic;
+    color: #7a8597;
+}
+
+/* ---------- Lesson 2 — missing parts quadrants ---------- */
+.pc-quadrant-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+.pc-quadrant {
+    background: #fbe3df;
+    border: 1px solid #f2c0bb;
+    border-radius: 4px;
+    padding: 20px;
+}
+.pc-quadrant h3 {
+    color: var(--pc-red);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+.pc-quadrant .x-box {
+    background: var(--pc-red);
+    color: #fff;
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    font-weight: 700;
+}
+
+/* ---------- Lesson 3 — RCTF framework pillars ---------- */
+.pc-pillars {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+.pc-pillar {
+    padding: 22px 14px;
+    text-align: center;
+    border-radius: 4px;
+    min-height: 220px;
+}
+.pc-pillar .circle {
+    width: 86px;
+    height: 86px;
+    border-radius: 50%;
+    margin: 0 auto 14px auto;
+    color: #fff;
+    font-size: 2.2rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.pc-pillar h4 {
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+.pc-pillar p { font-size: 0.95rem; color: #2a3448; }
+
+.pc-pillar.role    { background: var(--pc-role-bg); }
+.pc-pillar.role    .circle, .pc-circle-role    { background: var(--pc-role); }
+.pc-pillar.role    h4 { color: var(--pc-role); }
+
+.pc-pillar.context { background: var(--pc-ctx-bg); }
+.pc-pillar.context .circle, .pc-circle-context { background: var(--pc-ctx); }
+.pc-pillar.context h4 { color: var(--pc-ctx); }
+
+.pc-pillar.task    { background: var(--pc-task-bg); }
+.pc-pillar.task    .circle, .pc-circle-task    { background: var(--pc-task); }
+.pc-pillar.task    h4 { color: var(--pc-task); }
+
+.pc-pillar.format  { background: var(--pc-fmt-bg); }
+.pc-pillar.format  .circle, .pc-circle-format  { background: var(--pc-fmt); }
+.pc-pillar.format  h4 { color: #a88807; }
+
+.pc-example-box {
+    margin-top: 24px;
+    border: 1px solid #c2cef0;
+    background: #e4ebfa;
+    padding: 14px 18px;
+    font-style: italic;
+    color: #324a80;
+    border-radius: 4px;
+}
+
+/* ---------- Lesson 4 — before/after ---------- */
+.pc-compare-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+.pc-compare {
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.pc-compare .bar {
+    color: #fff;
+    font-weight: 700;
+    padding: 10px 18px;
+    letter-spacing: 0.02em;
+}
+.pc-compare.before { background: #fbe3df; border: 1px solid #f2c0bb; }
+.pc-compare.before .bar { background: var(--pc-red); }
+.pc-compare.after  { background: #d7f0e3; border: 1px solid #9edab6; }
+.pc-compare.after  .bar { background: var(--pc-green); }
+.pc-compare .body { padding: 20px; flex: 1; }
+.pc-compare .body .prompt-quote {
+    background: #fff;
+    padding: 14px;
+    border-radius: 3px;
+    font-style: italic;
+    color: #1a1f2e;
+    text-align: center;
+    margin-bottom: 14px;
+}
+.pc-compare ul { padding-left: 18px; margin-bottom: 0; }
+.pc-compare .footer-bar {
+    color: #fff;
+    text-align: center;
+    font-weight: 700;
+    padding: 12px;
+}
+.pc-compare.before .footer-bar { background: var(--pc-red); }
+.pc-compare.after  .footer-bar { background: var(--pc-green); }
+
+/* ---------- Lesson 5 — Build-A-Prompt interactive ---------- */
+.pc-scenario-box {
+    background: #e4ebfa;
+    border: 1px solid #c2cef0;
+    color: var(--pc-navy);
+    padding: 14px 18px;
+    border-radius: 4px;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+.pc-build-row {
+    display: grid;
+    grid-template-columns: 110px 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+    align-items: stretch;
+}
+.pc-build-tag {
+    color: #fff;
+    font-weight: 700;
+    text-align: center;
+    padding: 14px 10px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.pc-build-tag.role    { background: var(--pc-role); color: var(--pc-role); background: var(--pc-role-bg); }
+.pc-build-tag.context { background: var(--pc-ctx-bg); color: var(--pc-ctx); }
+.pc-build-tag.task    { background: var(--pc-task-bg); color: var(--pc-task); }
+.pc-build-tag.format  { background: var(--pc-fmt-bg); color: #a88807; }
+
+.pc-build-option {
+    cursor: pointer;
+    background: #fbe3df;
+    border: 1px solid #eac4c0;
+    padding: 12px 14px;
+    border-radius: 4px;
+    transition: transform 0.08s ease-in-out, border-color 0.08s;
+}
+.pc-build-option.correct { background: #d7f0e3; border-color: #9edab6; }
+.pc-build-option:hover { transform: translateY(-1px); }
+.pc-build-option.selected { outline: 3px solid var(--pc-blue); }
+.pc-build-option .opt-id { font-weight: 700; margin-right: 6px; }
+.pc-build-option .note { display: block; margin-top: 6px; font-size: 0.88rem; color: #4b5668; }
+
+.pc-assembled {
+    display: none;
+    background: #fff;
+    border: 1px solid #c2cef0;
+    border-radius: 4px;
+    padding: 22px;
+    margin-top: 24px;
+}
+.pc-assembled.visible { display: block; }
+.pc-assembled .row-item {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+    align-items: center;
+}
+.pc-assembled .circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.pc-note-banner {
+    background: #dde5fa;
+    border: 1px solid #c2cef0;
+    border-radius: 4px;
+    padding: 12px 16px;
+    margin-top: 12px;
+    color: var(--pc-navy);
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Progress bar (reused across lessons) */
+.pc-progress {
+    height: 6px;
+    background: #d7dbe6;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+.pc-progress-bar {
+    height: 100%;
+    background: var(--pc-blue);
+}
+
+/* Quiz stub pages */
+.pc-stub {
+    text-align: center;
+    padding: 72px 24px;
+}
+.pc-stub h1 { color: var(--pc-navy); }
+.pc-stub p { color: #4b5668; max-width: 520px; margin: 12px auto 28px auto; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 860px) {
+    .pc-wasted-grid, .pc-pillars { grid-template-columns: 1fr; }
+    .pc-quadrant-grid, .pc-compare-grid { grid-template-columns: 1fr; }
+    .pc-build-row { grid-template-columns: 1fr; }
+}

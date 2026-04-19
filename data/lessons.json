@@ -1,0 +1,142 @@
+{
+  "total_lessons": 5,
+  "lessons": [
+    {
+      "id": 1,
+      "type": "wasted-prompts",
+      "title": "Does this sound familiar?",
+      "subtitle": "You ask a quick question and get an answer that totally misses what you needed.",
+      "cards": [
+        {
+          "prompt": "\"explain Kafka\"",
+          "result": "You get a dense architecture diagram. Not what you needed.",
+          "badge": "Wasted prompt"
+        },
+        {
+          "prompt": "\"debug my code\"",
+          "result": "Claude replies: \"What code?\" You forgot to paste it.",
+          "badge": "Wasted prompt"
+        },
+        {
+          "prompt": "\"help me learn React\"",
+          "result": "You get a 20-page tutorial when you just wanted hooks explained.",
+          "badge": "Wasted prompt"
+        }
+      ],
+      "footer": "The culprit? Vague prompts. Let's fix them.",
+      "cta": "Fix them"
+    },
+    {
+      "id": 2,
+      "type": "missing-parts",
+      "title": "What makes a prompt vague?",
+      "subtitle": "A few things every vague prompt is missing:",
+      "quadrants": [
+        {
+          "label": "No Role",
+          "body": "You don't tell the LLM who it's supposed to be. It defaults to a generic assistant with no expertise."
+        },
+        {
+          "label": "No Context",
+          "body": "You don't share your level, situation, or what you're working on. The LLM guesses — and usually guesses wrong."
+        },
+        {
+          "label": "No Clear Task",
+          "body": "Your ask is too broad or ambiguous. You get an overview, not the specific help you need."
+        },
+        {
+          "label": "No Format",
+          "body": "You don't say how long or what shape the answer should be. You get a wall of text you didn't ask for."
+        }
+      ],
+      "cta": "Next"
+    },
+    {
+      "id": 3,
+      "type": "framework",
+      "title": "The RCTF Framework",
+      "subtitle": "Four parts. One prompt. Better every time.",
+      "pillars": [
+        { "letter": "R", "name": "Role", "desc": "Tell the LLM who it is.", "color": "role" },
+        { "letter": "C", "name": "Context", "desc": "Share your background & situation.", "color": "context" },
+        { "letter": "T", "name": "Task", "desc": "State clearly what you want.", "color": "task" },
+        { "letter": "F", "name": "Format", "desc": "Specify length & structure.", "color": "format" }
+      ],
+      "example": "Example: \"You are a senior backend engineer [R]. I'm a CS student new to Kafka [C]. Explain consumer groups in 3 bullets [T]. No jargon [F].\"",
+      "cta": "See in action"
+    },
+    {
+      "id": 4,
+      "type": "compare",
+      "title": "Before vs. After",
+      "subtitle": "Same topic — completely different results.",
+      "before": {
+        "label": "BEFORE  (vague)",
+        "prompt": "\"explain kafka consumer groups\"",
+        "bullets": [
+          "Wall of text with architecture diagrams",
+          "No mention of your level or needs",
+          "4 follow-up messages wasted"
+        ],
+        "footer": "4 prompts wasted"
+      },
+      "after": {
+        "label": "AFTER  (RCTF structured)",
+        "prompt": "\"You are a senior backend engineer. I am a CS student new to Kafka. Explain consumer groups in 3 bullet points. Avoid jargon.\"",
+        "bullets": [
+          "3 crisp bullet points",
+          "Calibrated to your level",
+          "Exactly what you needed, first try"
+        ],
+        "footer": "1 prompt used"
+      },
+      "cta": "Practice it"
+    },
+    {
+      "id": 5,
+      "type": "build-prompt",
+      "title": "Build-A-Prompt Challenge",
+      "scenario": "You want to ask an LLM to help you prepare for a data analyst job interview at a tech company.",
+      "instructions": "For each RCTF component, pick the option that belongs in the prompt.",
+      "rows": [
+        {
+          "key": "role",
+          "letter": "R",
+          "name": "Role",
+          "options": [
+            { "id": "A", "text": "\"You are helpful\"", "note": "Too generic", "correct": false },
+            { "id": "B", "text": "\"You are an experienced data science hiring manager\"", "note": "Real expertise", "correct": true }
+          ]
+        },
+        {
+          "key": "context",
+          "letter": "C",
+          "name": "Context",
+          "options": [
+            { "id": "A", "text": "\"I need help\"", "note": "No info about you", "correct": false },
+            { "id": "B", "text": "\"I am a CS student with SQL & Python skills, applying for a junior data analyst role\"", "note": "LLM knows your level", "correct": true }
+          ]
+        },
+        {
+          "key": "task",
+          "letter": "T",
+          "name": "Task",
+          "options": [
+            { "id": "A", "text": "\"Help me prepare\"", "note": "Too vague", "correct": false },
+            { "id": "B", "text": "\"Give me the 5 most common interview questions and a model answer for each\"", "note": "Clear & specific", "correct": true }
+          ]
+        },
+        {
+          "key": "format",
+          "letter": "F",
+          "name": "Format",
+          "options": [
+            { "id": "A", "text": "\"Answer me\"", "note": "No structure", "correct": false },
+            { "id": "B", "text": "\"Format as Q&A pairs, keep each answer under 80 words\"", "note": "Exact output", "correct": true }
+          ]
+        }
+      ],
+      "cta": "Assemble Prompt"
+    }
+  ]
+}

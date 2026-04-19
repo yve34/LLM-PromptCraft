@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block title %}PromptCraft — Lesson {{ current }} of {{ total }}{% endblock %}
+
+{% block nav_right %}Lesson {{ current }} of {{ total }}{% endblock %}
+
+{% block content %}
+
+    {# Progress bar — same across every lesson #}
+    <div class="pc-progress">
+        <div class="pc-progress-bar" style="width: {{ (current / total * 100) | round(0) }}%"></div>
+    </div>
+
+    {# Header row: title / subtitle on the left, CTA on the right (matches prototype) #}
+    <div class="pc-header-row">
+        <div>
+            <h1 class="pc-title">{{ lesson.title }}</h1>
+            {% if lesson.subtitle %}
+                <p class="pc-subtitle">{{ lesson.subtitle }}</p>
+            {% endif %}
+            {% if lesson.scenario %}
+                <div class="pc-scenario-box">Scenario: {{ lesson.scenario }}</div>
+            {% endif %}
+        </div>
+
+        {# Lesson 5 CTA is handled separately, once the user builds the prompt #}
+        {% if lesson.type != 'build-prompt' %}
+            <a href="{{ next_url }}" class="btn btn-pc-primary text-nowrap">
+                {{ lesson.cta or 'Next' }} &nbsp;&rarr;
+            </a>
+        {% endif %}
+    </div>
+
+    {# ============================= LESSON 1 ============================= #}
+    {% if lesson.type == 'wasted-prompts' %}
+        <div class="pc-wasted-grid">
+            {% for card in lesson.cards %}
+                <div class="pc-wasted-card">
+                    <div class="prompt">{{ card.prompt }}</div>
+                    <div class="result">{{ card.result }}</div>
+                    <div class="badge-wasted">{{ card.badge }}</div>
+                </div>
+            {% endfor %}
+        </div>
+        {% if lesson.footer %}
+            <p class="pc-wasted-footer">{{ lesson.footer }}</p>
+        {% endif %}
+
+    {# ============================= LESSON 2 ============================= #}
+    {% elif lesson.type == 'missing-parts' %}
+        <div class="pc-quadrant-grid">
+            {% for q in lesson.quadrants %}
+                <div class="pc-quadrant">
+                    <h3><span class="x-box">&times;</span> {{ q.label }}</h3>
+                    <p class="mb-0">{{ q.body }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+    {# ============================= LESSON 3 ============================= #}
+    {% elif lesson.type == 'framework' %}
+        <div class="pc-pillars">
+            {% for p in lesson.pillars %}
+                <div class="pc-pillar {{ p.color }}">
+                    <div class="circle">{{ p.letter }}</div>
+                    <h4>{{ p.name }}</h4>
+                    <p>{{ p.desc }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        {% if lesson.example %}
+            <div class="pc-example-box">{{ lesson.example }}</div>
+        {% endif %}
+
+    {# ============================= LESSON 4 ============================= #}
+    {% elif lesson.type == 'compare' %}
+        <div class="pc-compare-grid">
+            <div class="pc-compare before">
+                <div class="bar">{{ lesson.before.label }}</div>
+                <div class="body">
+                    <div class="prompt-quote">{{ lesson.before.prompt }}</div>
+                    <ul>
+                        {% for b in lesson.before.bullets %}
+                            <li>{{ b }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="footer-bar">{{ lesson.before.footer }}</div>
+            </div>
+
+            <div class="pc-compare after">
+                <div class="bar">{{ lesson.after.label }}</div>
+                <div class="body">
+                    <div class="prompt-quote">{{ lesson.after.prompt }}</div>
+                    <ul>
+                        {% for b in lesson.after.bullets %}
+                            <li>{{ b }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="footer-bar">{{ lesson.after.footer }}</div>
+            </div>
+        </div>
+
+    {# ============================= LESSON 5 (interactive) ============================= #}
+    {% elif lesson.type == 'build-prompt' %}
+        <p class="pc-subtitle mb-3">{{ lesson.instructions }}</p>
+
+        <div id="build-prompt-board">
+            {% for row in lesson.rows %}
+                <div class="pc-build-row" data-key="{{ row.key }}">
+                    <div class="pc-build-tag {{ row.key }}">
+                        {{ row.letter }} &mdash; {{ row.name }}
+                    </div>
+                    {% for opt in row.options %}
+                        <div class="pc-build-option {% if opt.correct %}correct{% endif %}"
+                             data-key="{{ row.key }}"
+                             data-id="{{ opt.id }}">
+                            <span class="opt-id">{{ opt.id }}:</span>
+                            <span class="opt-text" data-id="{{ opt.id }}">{{ opt.text }}</span>
+                            <small class="note">&larr; {{ opt.note }}</small>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="pc-note-banner">
+            Pick the best option for each row &mdash; then assemble your full prompt.
+        </div>
+
+        <div class="text-center mt-3">
+            <button id="assemble-btn" class="btn btn-pc-primary disabled" disabled>
+                {{ lesson.cta }} &nbsp;&rarr;
+            </button>
+        </div>
+
+        {# Assembled prompt view — hidden until user clicks Assemble #}
+        <div class="pc-assembled" id="assembled-prompt">
+            <h3 class="pc-title mb-3">Here's the prompt you just built:</h3>
+
+            {% for row in lesson.rows %}
+                <div class="row-item" data-key="{{ row.key }}">
+                    <div class="circle pc-circle-{{ row.key }}">{{ row.letter }}</div>
+                    <div class="final-text"></div>
+                </div>
+            {% endfor %}
+
+            <div class="pc-note-banner">
+                Full prompt assembled &mdash; this is exactly what a structured
+                RCTF prompt looks like, ready to send.
+            </div>
+
+            <div class="text-center mt-4 d-none" id="take-quiz-cta">
+                <a href="{{ next_url }}" class="btn btn-pc-success">
+                    Take the Quiz &nbsp;&rarr;
+                </a>
+            </div>
+        </div>
+
+    {% endif %}
+
+    {# ---- shared footer nav (back link so TA can navigate easily) ---- #}
+    <div class="mt-5 d-flex justify-content-between">
+        <a href="{{ prev_url }}" class="text-muted small">&larr; back</a>
+        <span class="text-muted small">Lesson {{ current }} / {{ total }}</span>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}PromptCraft — Welcome{% endblock %}
+
+{% block content %}
+<section class="pc-welcome">
+    <h1>Welcome to PromptCraft</h1>
+    <p class="lead">
+        Learn to write better prompts and get smarter results from AI
+        &mdash; in 10 minutes.
+    </p>
+
+    <div class="pc-chiprow">
+        <div class="pc-chip">~10 min</div>
+        <div class="pc-chip">5 short lessons</div>
+        <div class="pc-chip">1 interactive activity</div>
+        <div class="pc-chip">4-question quiz</div>
+    </div>
+
+    <form action="{{ url_for('start') }}" method="post" class="d-inline-block">
+        <button type="submit" class="btn btn-pc-primary">
+            Start Learning &nbsp;&rarr;
+        </button>
+    </form>
+</section>
+{% endblock %}
