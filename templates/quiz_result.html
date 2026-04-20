@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}PromptCraft — Quiz Complete!{% endblock %}
+{% block nav_right %}Quiz Complete!{% endblock %}
+
+{% block content %}
+{#
+  ── Eric's part ──────────────────────────────────────────────────────────
+  Owner : Eric  (eric/quiz-ui branch)
+  Page  : Final score / result screen
+  Ref   : HW10 slide p.19 — "Quiz Complete! ✓" with RCTF circles
+  Data  : score (int), total (int), answers (list of dicts)
+            each answer: { question, selected, is_correct, ts }
+  ─────────────────────────────────────────────────────────────────────────
+#}
+<section class="pc-stub">
+  <h1>Eric's part — Quiz Result</h1>
+  <p>
+    This page will show the final score screen.<br>
+    Score available: <strong>{{ score }} / {{ total }}</strong><br>
+    (See HW10 slide p.19 for the design reference.)
+  </p>
+  <a href="{{ url_for('home') }}" class="btn btn-pc-primary">
+    Back to Home &nbsp;&rarr;
+  </a>
+</section>
+{% endblock %}

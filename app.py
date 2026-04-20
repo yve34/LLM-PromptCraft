@@ -26,8 +26,9 @@ from flask import (
     url_for,
 )
 
-BASE_DIR = Path(__file__).resolve().parent
+BASE_DIR  = Path(__file__).resolve().parent
 DATA_PATH = BASE_DIR / "data" / "lessons.json"
+QUIZ_PATH = BASE_DIR / "data" / "quiz.json"
 
 app = Flask(__name__)
 
@@ -36,9 +37,12 @@ app = Flask(__name__)
 # Data layer
 # ---------------------------------------------------------------------------
 def load_lessons():
-    """Load lesson data from JSON. Re-read on each call so editing the JSON
-    during development doesn't require a server restart."""
     with open(DATA_PATH, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def load_quiz():
+    with open(QUIZ_PATH, "r", encoding="utf-8") as f:
         return json.load(f)
 
 
@@ -71,9 +75,10 @@ def home():
 @app.route("/start", methods=["POST"])
 def start():
     """Records start time then redirects into lesson 1."""
-    USER_STATE["started_at"] = datetime.utcnow().isoformat()
+    USER_STATE["started_at"]    = datetime.utcnow().isoformat()
     USER_STATE["lesson_visits"] = []
-    USER_STATE["build_prompt"] = {}
+    USER_STATE["build_prompt"]  = {}
+    USER_STATE["quiz_answers"]  = []
     return redirect(url_for("learn", n=1))
 
 
@@ -124,35 +129,90 @@ def api_state():
 
 
 # ---------------------------------------------------------------------------
-# Part 2 stubs — owned by Vishal / Yve / Eric. These keep the flow clickable
-# end-to-end for HW10 grading until the real quiz goes in.
+# Part 2 — Quiz routes
+# /quiz        : intro page (Eric's template)
+# /quiz/<n>    : question renderer + answer submission (Yve's template)
+# /quiz/result : final score page (Eric's template)
 # ---------------------------------------------------------------------------
 @app.route("/quiz")
 def quiz_intro():
-    return render_template("quiz_stub.html", heading="Quiz Time!",
-                           body="Part 2 (quiz) is owned by the quiz team. "
-                                "Click through works — real questions land next.",
-                           cta_label="Start Quiz",
-                           cta_url=url_for("quiz_question", n=1))
-
-
-@app.route("/quiz/<int:n>")
-def quiz_question(n):
-    return render_template("quiz_stub.html",
-                           heading=f"Quiz Question {n} of 4",
-                           body="Quiz question UI owned by Part 2.",
-                           cta_label="Next" if n < 4 else "See Score",
-                           cta_url=url_for("quiz_question", n=n + 1) if n < 4
-                                   else url_for("quiz_result"))
+    USER_STATE["quiz_answers"] = []
+    return render_template("quiz_intro.html")
 
 
 @app.route("/quiz/result")
 def quiz_result():
-    return render_template("quiz_stub.html",
-                           heading="Quiz Complete!",
-                           body="Score + summary land here when Part 2 ships.",
-                           cta_label="Back to Home",
-                           cta_url=url_for("home"))
+    answers = USER_STATE.get("quiz_answers", [])
+    score   = sum(1 for a in answers if a.get("is_correct"))
+    total   = load_quiz()["total_questions"]
+    return render_template("quiz_result.html", score=score, total=total,
+                           answers=answers)
+
+
+@app.route("/quiz/<int:n>", methods=["GET", "POST"])
+def quiz_question(n):
+    data  = load_quiz()
+    total = data["total_questions"]
+    if n < 1 or n > total:
+        abort(404)
+
+    question = data["questions"][n - 1]
+    existing = next(
+        (a for a in USER_STATE["quiz_answers"] if a["question"] == n), None
+    )
+
+    if request.method == "POST":
+        if not existing:
+            if question["type"] == "match":
+                selected = {
+                    lbl["id"]: request.form.get(f"match_{lbl['id']}", "")
+                    for lbl in question["labels"]
+                }
+                is_correct = (selected == question["correct_answer"])
+                stored     = json.dumps(selected)
+            else:
+                selected   = request.form.get("answer", "")
+                is_correct = (selected == question["correct_answer"])
+                stored     = selected
+
+            USER_STATE["quiz_answers"].append({
+                "question":   n,
+                "selected":   stored,
+                "is_correct": is_correct,
+                "ts":         datetime.utcnow().isoformat(),
+            })
+        return redirect(url_for("quiz_question", n=n))
+
+    # GET — build context for template
+    answered    = existing is not None
+    user_answer = None
+    is_correct  = None
+    if answered:
+        raw = existing["selected"]
+        if question["type"] == "match":
+            try:
+                user_answer = json.loads(raw)
+            except (ValueError, TypeError):
+                user_answer = {}
+        else:
+            user_answer = raw
+        is_correct = existing["is_correct"]
+
+    next_url = (
+        url_for("quiz_question", n=n + 1) if n < total
+        else url_for("quiz_result")
+    )
+
+    return render_template(
+        "quiz.html",
+        question=question,
+        current=n,
+        total=total,
+        answered=answered,
+        user_answer=user_answer,
+        is_correct=is_correct,
+        next_url=next_url,
+    )
 
 
 # ---------------------------------------------------------------------------

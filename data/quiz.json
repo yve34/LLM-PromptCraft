@@ -1,0 +1,139 @@
+{
+  "total_questions": 4,
+  "questions": [
+    {
+      "id": 1,
+      "type": "single_choice",
+      "question": "Which prompt will get a better answer?",
+      "instruction": "Click the option you think is better:",
+      "prompt_quote": null,
+      "options": [
+        {
+          "id": "A",
+          "text": "\"explain machine learning\"",
+          "hint": "Short. Simple. Straight to the point."
+        },
+        {
+          "id": "B",
+          "text": "\"You are a CS tutor. I am a non-technical product manager. Explain machine learning in 3 bullet points using everyday examples.\"",
+          "hint": "Includes Role, Context, Task, and Format."
+        }
+      ],
+      "correct_answer": "B",
+      "explanation": {
+        "summary": "Why Option B wins:",
+        "breakdown": [
+          {"label": "R \u2014 Role",    "color": "role",    "text": "\"You are a CS tutor\" \u2192 The LLM knows what expertise to use."},
+          {"label": "C \u2014 Context", "color": "context", "text": "\"non-technical product manager\" \u2192 It knows your level and background."},
+          {"label": "T \u2014 Task",    "color": "task",    "text": "\"Explain machine learning\" \u2192 Clear, specific objective."},
+          {"label": "F \u2014 Format",  "color": "format",  "text": "\"3 bullet points, everyday examples\" \u2192 You get exactly what you asked for."}
+        ],
+        "note": "Option A (\"explain machine learning\") gives the LLM nothing to work with \u2014 no level, no format, no context. You get a generic textbook definition."
+      }
+    },
+    {
+      "id": 2,
+      "type": "single_choice",
+      "question": "What's missing from this prompt?",
+      "instruction": "Select all that apply:",
+      "prompt_quote": "\"Write me a Python function that parses JSON and returns a list of user names.\"",
+      "options": [
+        {
+          "id": "A",
+          "text": "Role \u2014 no instruction on what expertise level to use",
+          "hint": null
+        },
+        {
+          "id": "B",
+          "text": "Context \u2014 no info about JSON structure, project, or constraints",
+          "hint": null
+        },
+        {
+          "id": "C",
+          "text": "Format \u2014 no spec for error handling, type hints, or docs",
+          "hint": null
+        },
+        {
+          "id": "D",
+          "text": "All of the above",
+          "hint": null
+        }
+      ],
+      "correct_answer": "D",
+      "explanation": {
+        "summary": "Correct answer: D \u2014 All of the above",
+        "breakdown": [
+          {"label": "Missing Role",    "color": "role",    "text": "Should the LLM act as a senior dev? A data engineer? We don't know."},
+          {"label": "Missing Context", "color": "context", "text": "What is the JSON structure? Flat dict? Nested? What project is this for?"},
+          {"label": "Missing Format",  "color": "format",  "text": "Should it include type hints? Docstrings? Error handling for malformed JSON?"}
+        ],
+        "note": "Improved: \"You are a Python expert. I am writing a data pipeline. Parse a JSON list of user objects {name, email} and return a list of names. Include type hints and a try/except block.\""
+      }
+    },
+    {
+      "id": 3,
+      "type": "single_choice",
+      "question": "Which is the best improvement to this prompt?",
+      "instruction": null,
+      "prompt_quote": "Original (vague): \"help me debug this error\"",
+      "options": [
+        {
+          "id": "A",
+          "text": "\"debug error: AttributeError line 23\"",
+          "hint": "Slightly more specific, still very vague."
+        },
+        {
+          "id": "B",
+          "text": "\"You are a Python expert. I have AttributeError: NoneType has no attribute 'split' on line 23 of my Flask app. Fix in under 5 lines.\"",
+          "hint": "Full RCTF: Role, Context, Task, Format."
+        },
+        {
+          "id": "C",
+          "text": "\"Please help debug my Python code where I get a NoneType error\"",
+          "hint": "More polite, but no role, no exact error, no format."
+        }
+      ],
+      "correct_answer": "B",
+      "explanation": {
+        "summary": "Option B is the only prompt that uses all 4 parts of RCTF:",
+        "breakdown": [
+          {"label": "R \u2014 Role",    "color": "role",    "text": "\"You are a Python expert\""},
+          {"label": "C \u2014 Context", "color": "context", "text": "\"AttributeError: NoneType\u2026 on line 23 of my Flask app\""},
+          {"label": "T \u2014 Task",    "color": "task",    "text": "\"Fix it\""},
+          {"label": "F \u2014 Format",  "color": "format",  "text": "\"under 5 lines\""}
+        ],
+        "note": null
+      }
+    },
+    {
+      "id": 4,
+      "type": "match",
+      "question": "Identify the RCTF components in this prompt:",
+      "instruction": "For each label, select which sentence it maps to:",
+      "prompt_quote": "\"You are a senior data scientist. I'm a business analyst who's never used Python before. Write a script that reads a CSV and plots a bar chart of monthly sales. Use comments to explain each line and keep it under 20 lines.\"",
+      "sentences": [
+        {"id": "1", "text": "You are a senior data scientist."},
+        {"id": "2", "text": "I'm a business analyst who's never used Python before."},
+        {"id": "3", "text": "Write a script that reads a CSV and plots a bar chart of monthly sales."},
+        {"id": "4", "text": "Use comments to explain each line and keep it under 20 lines."}
+      ],
+      "labels": [
+        {"id": "R", "name": "Role",    "color": "role"},
+        {"id": "C", "name": "Context", "color": "context"},
+        {"id": "T", "name": "Task",    "color": "task"},
+        {"id": "F", "name": "Format",  "color": "format"}
+      ],
+      "correct_answer": {"R": "1", "C": "2", "T": "3", "F": "4"},
+      "explanation": {
+        "summary": "Here's how the prompt breaks down:",
+        "breakdown": [
+          {"label": "R \u2014 Role",    "color": "role",    "text": "\"You are a senior data scientist.\""},
+          {"label": "C \u2014 Context", "color": "context", "text": "\"I'm a business analyst who's never used Python before.\""},
+          {"label": "T \u2014 Task",    "color": "task",    "text": "\"Write a script that reads a CSV and plots a bar chart of monthly sales.\""},
+          {"label": "F \u2014 Format",  "color": "format",  "text": "\"Use comments to explain each line and keep it under 20 lines.\""}
+        ],
+        "note": "Each sentence does exactly one job. When your prompt has all 4, the LLM has everything it needs to give a great answer."
+      }
+    }
+  ]
+}

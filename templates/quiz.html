@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+
+{% block title %}PromptCraft — Question {{ current }} of {{ total }}{% endblock %}
+{% block nav_right %}Question {{ current }} of {{ total }}{% endblock %}
+
+{% block head_extra %}
+<script>
+  var QUESTION_TYPE = "{{ question.type }}";
+  var ANSWERED = {{ 'true' if answered else 'false' }};
+</script>
+{% endblock %}
+
+{% block content %}
+
+  <div class="pc-progress">
+    <div class="pc-progress-bar" style="width: {{ (current / total * 100) | round(0) }}%"></div>
+  </div>
+
+  {# ================================================================== #}
+  {#  QUESTION STATE (not yet answered)                                  #}
+  {# ================================================================== #}
+  {% if not answered %}
+
+  <form method="POST" action="{{ url_for('quiz_question', n=current) }}" id="quiz-form">
+
+    <div class="pc-header-row mb-4">
+      <div>
+        <h1 class="pc-title">{{ question.question }}</h1>
+        {% if question.instruction %}
+          <p class="pc-subtitle">{{ question.instruction }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if question.prompt_quote %}
+      <div class="pc-quiz-prompt-box mb-4">{{ question.prompt_quote }}</div>
+    {% endif %}
+
+    {# ---- single_choice ---- #}
+    {% if question.type == 'single_choice' %}
+      <div class="pc-quiz-options pc-quiz-options-{{ question.options | length }}">
+        {% for opt in question.options %}
+          <label class="pc-quiz-option" data-id="{{ opt.id }}">
+            <input type="radio" name="answer" value="{{ opt.id }}" class="d-none quiz-radio" required>
+            <div class="pc-quiz-option-id">Option {{ opt.id }}</div>
+            <div class="pc-quiz-option-body">
+              <div class="pc-quiz-option-text">{{ opt.text }}</div>
+              {% if opt.hint %}
+                <div class="pc-quiz-option-hint">{{ opt.hint }}</div>
+              {% endif %}
+            </div>
+          </label>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {# ---- match ---- #}
+    {% if question.type == 'match' %}
+      <div class="pc-match-board">
+        {% for lbl in question.labels %}
+          <div class="pc-match-row">
+            <div class="pc-rctf-chip {{ lbl.color }}">
+              <span class="pc-rctf-letter">{{ lbl.id }}</span>
+              {{ lbl.name }}
+            </div>
+            <select name="match_{{ lbl.id }}" class="form-select pc-match-select" required>
+              <option value="" disabled selected>— select sentence —</option>
+              {% for s in question.sentences %}
+                <option value="{{ s.id }}">{{ s.id }}. {{ s.text }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        {% endfor %}
+      </div>
+      <p class="text-muted small mt-2">Hint: There are exactly 4 components — one sentence each!</p>
+    {% endif %}
+
+    <div class="text-end mt-4">
+      <button type="submit" class="btn btn-pc-primary" id="check-btn" disabled>
+        Check Answer &nbsp;&rarr;
+      </button>
+    </div>
+  </form>
+
+  {# ================================================================== #}
+  {#  REVEALED STATE (already answered)                                  #}
+  {# ================================================================== #}
+  {% else %}
+
+  <div class="pc-result-banner {% if is_correct %}correct{% else %}incorrect{% endif %} mb-4">
+    {% if is_correct %}
+      ✓&nbsp; Correct!
+    {% else %}
+      ✗&nbsp; Not quite — the correct answer is shown below.
+    {% endif %}
+  </div>
+
+  <div class="pc-header-row mb-3">
+    <h1 class="pc-title">{{ question.question }}</h1>
+    <a href="{{ next_url }}" class="btn btn-pc-primary text-nowrap">
+      {% if current < total %}Next Q{% else %}See Your Score{% endif %} &nbsp;&rarr;
+    </a>
+  </div>
+
+  {% if question.prompt_quote %}
+    <div class="pc-quiz-prompt-box mb-4">{{ question.prompt_quote }}</div>
+  {% endif %}
+
+  {# ---- revealed: single_choice options ---- #}
+  {% if question.type == 'single_choice' %}
+    <div class="pc-quiz-options pc-quiz-options-{{ question.options | length }} mb-4">
+      {% for opt in question.options %}
+        {% set is_correct_opt = (question.correct_answer == opt.id) %}
+        {% set is_user_pick   = (user_answer == opt.id) %}
+        <div class="pc-quiz-option revealed
+            {%- if is_correct_opt %} opt-correct
+            {%- elif is_user_pick %} opt-wrong
+            {%- endif %}">
+          <div class="pc-quiz-option-id">Option {{ opt.id }}</div>
+          <div class="pc-quiz-option-body">
+            <div class="pc-quiz-option-text">{{ opt.text }}</div>
+            {% if opt.hint %}
+              <div class="pc-quiz-option-hint">{{ opt.hint }}</div>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {# ---- revealed: match rows ---- #}
+  {% if question.type == 'match' %}
+    <div class="pc-match-board mb-4">
+      {% for lbl in question.labels %}
+        {% set correct_sid = question.correct_answer[lbl.id] %}
+        {% set user_sid    = user_answer.get(lbl.id) if user_answer else '' %}
+        {% set row_correct = (user_sid == correct_sid) %}
+        <div class="pc-match-row revealed {{ 'match-correct' if row_correct else 'match-wrong' }}">
+          <div class="pc-rctf-chip {{ lbl.color }}">
+            <span class="pc-rctf-letter">{{ lbl.id }}</span>
+            {{ lbl.name }}
+          </div>
+          <div class="pc-match-answer-text">
+            {% for s in question.sentences %}
+              {% if s.id == correct_sid %}{{ s.text }}{% endif %}
+            {% endfor %}
+            <span class="pc-match-tick">{{ '✓' if row_correct else '✗' }}</span>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {# ---- explanation ---- #}
+  <div class="pc-explanation">
+    <h3 class="pc-explanation-title">{{ question.explanation.summary }}</h3>
+    {% for item in question.explanation.breakdown %}
+      <div class="pc-explanation-row">
+        <span class="pc-explanation-label pc-label-{{ item.color }}">{{ item.label }}</span>
+        <span class="pc-explanation-text">{{ item.text }}</span>
+      </div>
+    {% endfor %}
+    {% if question.explanation.note %}
+      <p class="pc-explanation-note">{{ question.explanation.note }}</p>
+    {% endif %}
+  </div>
+
+  {% endif %}
+
+  <div class="mt-5 d-flex justify-content-between">
+    {% if current > 1 %}
+      <a href="{{ url_for('quiz_question', n=current - 1) }}" class="text-muted small">&larr; back</a>
+    {% else %}
+      <a href="{{ url_for('quiz_intro') }}" class="text-muted small">&larr; back</a>
+    {% endif %}
+    <span class="text-muted small">Question {{ current }} / {{ total }}</span>
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/quiz.js') }}"></script>
+{% endblock %}
