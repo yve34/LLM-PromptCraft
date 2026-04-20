@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}PromptCraft — Quiz{% endblock %}
+{% block nav_right %}Quiz{% endblock %}
+
+{% block content %}
+{#
+  ── Eric's part ──────────────────────────────────────────────────────────
+  Owner : Eric  (eric/quiz-ui branch)
+  Page  : Quiz intro / start screen
+  Ref   : HW10 slide p.10 — "Quiz Time!" with 4 progress squares + Let's Go
+  ─────────────────────────────────────────────────────────────────────────
+#}
+<section class="pc-stub">
+  <h1>Eric's part — Quiz Intro</h1>
+  <p>This page will show the "Quiz Time!" intro screen.<br>
+     (See HW10 slide p.10 for the design reference.)</p>
+  <a href="{{ url_for('quiz_question', n=1) }}" class="btn btn-pc-primary">
+    Let's Go &nbsp;&rarr;
+  </a>
+</section>
+{% endblock %}
