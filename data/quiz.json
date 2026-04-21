@@ -1,5 +1,5 @@
 {
-  "total_questions": 4,
+  "total_questions": 5,
   "questions": [
     {
       "id": 1,
@@ -133,6 +133,46 @@
           {"label": "F \u2014 Format",  "color": "format",  "text": "\"Use comments to explain each line and keep it under 20 lines.\""}
         ],
         "note": "Each sentence does exactly one job. When your prompt has all 4, the LLM has everything it needs to give a great answer."
+      }
+    },
+    {
+      "id": 5,
+      "type": "single_choice",
+      "question": "Which part of RCTF is this prompt missing?",
+      "instruction": "Choose the single biggest gap:",
+      "prompt_quote": "\"Act as a senior editor. My blog post is about urban gardening for beginners. Rewrite the intro.\"",
+      "options": [
+        {
+          "id": "A",
+          "text": "Role",
+          "hint": "\"Act as a senior editor\" \u2014 that's already a Role."
+        },
+        {
+          "id": "B",
+          "text": "Context",
+          "hint": "\"blog post about urban gardening for beginners\" \u2014 that's Context."
+        },
+        {
+          "id": "C",
+          "text": "Task",
+          "hint": "\"Rewrite the intro\" \u2014 that's the Task."
+        },
+        {
+          "id": "D",
+          "text": "Format",
+          "hint": "No length, tone, or structure is specified."
+        }
+      ],
+      "correct_answer": "D",
+      "explanation": {
+        "summary": "Correct answer: D \u2014 Format",
+        "breakdown": [
+          {"label": "R \u2014 Role",    "color": "role",    "text": "\"Act as a senior editor\" \u2713"},
+          {"label": "C \u2014 Context", "color": "context", "text": "\"urban gardening for beginners\" \u2713"},
+          {"label": "T \u2014 Task",    "color": "task",    "text": "\"Rewrite the intro\" \u2713"},
+          {"label": "F \u2014 Format",  "color": "format",  "text": "No word count, no tone, no structure \u2014 the LLM has to guess."}
+        ],
+        "note": "Better: \"Rewrite the intro in 3 sentences, conversational tone, ending with a hook question.\""
       }
     }
   ]
