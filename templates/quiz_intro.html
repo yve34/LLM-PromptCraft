@@ -7,14 +7,25 @@
 {#
   ── Eric's part ──────────────────────────────────────────────────────────
   Owner : Eric  (eric/quiz-ui branch)
-  Page  : Quiz intro / start screen
-  Ref   : HW10 slide p.10 — "Quiz Time!" with 4 progress squares + Let's Go
+  Page  : Quiz intro / start screen   (lo-fi p.10)
+  Data  : total (int) — passed from app.py quiz_intro()
   ─────────────────────────────────────────────────────────────────────────
 #}
-<section class="pc-stub">
-  <h1>Eric's part — Quiz Intro</h1>
-  <p>This page will show the "Quiz Time!" intro screen.<br>
-     (See HW10 slide p.10 for the design reference.)</p>
+<section class="pc-welcome pc-quiz-intro">
+  <div class="pc-quiz-badge" aria-hidden="true">?</div>
+
+  <h1>Quiz Time!</h1>
+  <p class="lead">{{ total }} questions. Test what you just learned.</p>
+
+  <div class="pc-quiz-progress-row">
+    <span class="pc-quiz-progress-label">0 / {{ total }} completed</span>
+    <div class="pc-quiz-squares">
+      {% for i in range(total) %}
+        <span class="pc-quiz-square"></span>
+      {% endfor %}
+    </div>
+  </div>
+
   <a href="{{ url_for('quiz_question', n=1) }}" class="btn btn-pc-primary">
     Let's Go &nbsp;&rarr;
   </a>

@@ -7,21 +7,67 @@
 {#
   ── Eric's part ──────────────────────────────────────────────────────────
   Owner : Eric  (eric/quiz-ui branch)
-  Page  : Final score / result screen
-  Ref   : HW10 slide p.19 — "Quiz Complete! ✓" with RCTF circles
+  Page  : Final score / result screen   (lo-fi p.19)
   Data  : score (int), total (int), answers (list of dicts)
             each answer: { question, selected, is_correct, ts }
   ─────────────────────────────────────────────────────────────────────────
 #}
-<section class="pc-stub">
-  <h1>Eric's part — Quiz Result</h1>
-  <p>
-    This page will show the final score screen.<br>
-    Score available: <strong>{{ score }} / {{ total }}</strong><br>
-    (See HW10 slide p.19 for the design reference.)
+<section class="pc-welcome pc-quiz-result">
+  <h1>Quiz Complete! <span class="pc-check">&check;</span></h1>
+  <p class="lead">You now know how to write structured, effective prompts.</p>
+
+  <div class="pc-result-score">
+    <span class="pc-result-score-num">{{ score }}</span>
+    <span class="pc-result-score-sep">/</span>
+    <span class="pc-result-score-total">{{ total }}</span>
+  </div>
+
+  <div class="pc-rctf-row">
+    <div class="pc-rctf-pill">
+      <div class="circle pc-circle-role">R</div>
+      <div class="pc-rctf-name">Role</div>
+    </div>
+    <div class="pc-rctf-pill">
+      <div class="circle pc-circle-context">C</div>
+      <div class="pc-rctf-name">Context</div>
+    </div>
+    <div class="pc-rctf-pill">
+      <div class="circle pc-circle-task">T</div>
+      <div class="pc-rctf-name">Task</div>
+    </div>
+    <div class="pc-rctf-pill">
+      <div class="circle pc-circle-format">F</div>
+      <div class="pc-rctf-name">Format</div>
+    </div>
+  </div>
+
+  <p class="pc-result-tagline">
+    Remember: <strong>Role</strong> | <strong>Context</strong> |
+    <strong>Task</strong> | <strong>Format</strong> &mdash; every time.
   </p>
-  <a href="{{ url_for('home') }}" class="btn btn-pc-primary">
-    Back to Home &nbsp;&rarr;
-  </a>
+
+  {% if answers %}
+    <div class="pc-result-breakdown">
+      <h3 class="pc-result-breakdown-title">Your answers</h3>
+      <ul class="pc-result-breakdown-list">
+        {% for a in answers %}
+          <li class="{{ 'is-correct' if a.is_correct else 'is-wrong' }}">
+            <span class="pc-result-q">Q{{ a.question }}</span>
+            <span class="pc-result-tick">{{ '✓' if a.is_correct else '✗' }}</span>
+            <span class="pc-result-pick">your answer: {{ a.selected }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  <div class="pc-result-actions">
+    <a href="{{ url_for('quiz_intro') }}" class="btn btn-outline-secondary me-2">
+      Retake Quiz
+    </a>
+    <a href="{{ url_for('home') }}" class="btn btn-pc-primary">
+      Back to Home &nbsp;&rarr;
+    </a>
+  </div>
 </section>
 {% endblock %}

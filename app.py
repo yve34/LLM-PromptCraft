@@ -137,7 +137,8 @@ def api_state():
 @app.route("/quiz")
 def quiz_intro():
     USER_STATE["quiz_answers"] = []
-    return render_template("quiz_intro.html")
+    total = load_quiz()["total_questions"]
+    return render_template("quiz_intro.html", total=total)
 
 
 @app.route("/quiz/result")
