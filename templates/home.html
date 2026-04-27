@@ -2,6 +2,49 @@
 
 {% block title %}PromptCraft — Welcome{% endblock %}
 
+{% block head_extra %}
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  /* HW11 home-page overrides — scoped to this page only */
+  body { font-family: 'Source Sans 3', sans-serif; }
+  .pc-navbar { background: #0B1F3A; }
+
+  .pc-chip {
+    background: #E4E8F2;
+    border: none;
+    color: #2B3344;
+  }
+
+  .pc-welcome h1 {
+    font-family: 'Source Serif 4', 'Source Serif Pro', Georgia, serif !important;
+    font-size: 44px !important;
+    line-height: 52px !important;
+    font-weight: 700 !important;
+    color: #0B1F3A;
+  }
+  .pc-welcome .lead {
+    font-family: 'Source Sans 3', sans-serif;
+    color: #2B3344;
+  }
+  .pc-welcome .btn-pc-primary {
+    background: #3346E0;
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+    min-width: 340px;
+  }
+  .pc-welcome .btn-pc-primary:hover { background: #2535c8; }
+
+  .pc-no-signup {
+    font-family: 'Source Sans 3', sans-serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #2B3344;
+    margin-top: 14px;
+    margin-bottom: 0;
+  }
+</style>
+{% endblock %}
+
 {% block content %}
 <section class="pc-welcome">
     <h1>Welcome to PromptCraft</h1>
@@ -22,5 +65,6 @@
             Start Learning &nbsp;&rarr;
         </button>
     </form>
+    <p class="pc-no-signup">No sign-up &middot; works in your browser</p>
 </section>
 {% endblock %}
