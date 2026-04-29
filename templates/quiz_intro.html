@@ -3,11 +3,75 @@
 {% block title %}PromptCraft — Quiz{% endblock %}
 {% block nav_right %}Quiz{% endblock %}
 
+{% block head_extra %}
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  /* HW11 quiz-intro overrides — scoped to this page only.
+     Acts as the transition between learning and quiz. Mirrors the design
+     tokens used in home.html and learn.html so the three screens read as
+     one product. */
+
+  body { font-family: 'Source Sans 3', sans-serif; color: #2B3344; }
+
+  .pc-navbar { background: #0B1F3A; }
+  .pc-navbar-right { font-family: 'Source Sans 3', sans-serif; }
+
+  .pc-quiz-intro h1 {
+    font-family: 'Source Serif 4', 'Source Serif Pro', Georgia, serif !important;
+    font-size: 44px !important;
+    line-height: 52px !important;
+    font-weight: 700 !important;
+    color: #0B1F3A;
+  }
+  .pc-quiz-intro .lead {
+    font-family: 'Source Sans 3', sans-serif;
+    color: #2B3344;
+  }
+
+  /* Indigo badge replaces the navy circle so the focus reads "action" */
+  .pc-quiz-intro .pc-quiz-badge {
+    background: #3346E0;
+    box-shadow: 0 6px 20px rgba(51, 70, 224, 0.22);
+    font-family: 'Source Serif 4', 'Source Serif Pro', Georgia, serif;
+  }
+
+  .pc-quiz-progress-label {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+    color: #5C6679;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 11px;
+  }
+  .pc-quiz-square {
+    border: 2px solid #E4E8F2;
+    background: #FFFFFF;
+  }
+
+  .pc-quiz-intro .btn-pc-primary {
+    background: #3346E0;
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+    min-width: 340px;
+  }
+  .pc-quiz-intro .btn-pc-primary:hover { background: #2535c8; }
+
+  .pc-quiz-caption {
+    font-family: 'Source Sans 3', sans-serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #5C6679;
+    margin-top: 14px;
+    margin-bottom: 0;
+  }
+</style>
+{% endblock %}
+
 {% block content %}
 {#
   ── Eric's part ──────────────────────────────────────────────────────────
-  Owner : Eric  (eric/quiz-ui branch)
-  Page  : Quiz intro / start screen   (lo-fi p.10)
+  Owner : Eric  (eric/hw11-quiz-graphic-design branch)
+  Page  : Quiz intro / start screen — also the learning→quiz transition
   Data  : total (int) — passed from app.py quiz_intro()
   ─────────────────────────────────────────────────────────────────────────
 #}
@@ -29,5 +93,6 @@
   <a href="{{ url_for('quiz_question', n=1) }}" class="btn btn-pc-primary">
     Let's Go &nbsp;&rarr;
   </a>
+  <p class="pc-quiz-caption">No time limit &middot; you can retake anytime</p>
 </section>
 {% endblock %}

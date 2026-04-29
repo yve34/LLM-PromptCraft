@@ -4,6 +4,152 @@
 {% block nav_right %}Question {{ current }} of {{ total }}{% endblock %}
 
 {% block head_extra %}
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  /* HW11 quiz-question overrides — scoped to this page only.
+     Same design tokens as home.html / learn.html so the screens read as
+     one product. RCTF accent colors are intentionally preserved on the
+     match-question chips and explanation labels — they are concept
+     colors, not decoration. */
+
+  body { font-family: 'Source Sans 3', sans-serif; color: #2B3344; }
+
+  .pc-navbar { background: #0B1F3A; }
+  .pc-navbar-right { font-family: 'Source Sans 3', sans-serif; }
+
+  /* Progress bar — refined indigo */
+  .pc-progress      { background: #E4E8F2; height: 6px; border-radius: 3px; }
+  .pc-progress-bar  { background: #3346E0; }
+
+  /* Title / subtitle — concordant with home + learn pages */
+  .pc-title {
+    font-family: 'Source Serif 4', 'Source Serif Pro', Georgia, serif !important;
+    font-size: 30px !important;
+    line-height: 38px !important;
+    font-weight: 700 !important;
+    color: #0B1F3A;
+  }
+  .pc-subtitle {
+    font-family: 'Source Sans 3', sans-serif;
+    color: #5C6679;
+  }
+
+  .btn-pc-primary {
+    background: #3346E0;
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+  }
+  .btn-pc-primary:hover { background: #2535c8; }
+
+  /* Prompt-quote box (the vague prompt being analysed) */
+  .pc-quiz-prompt-box {
+    background: #EBEFFB;
+    border: 1px solid #C2CEF0;
+    color: #0B1F3A;
+    font-family: 'Source Sans 3', sans-serif;
+  }
+
+  /* Option cards */
+  .pc-quiz-option {
+    background: #FFFFFF;
+    border: 1px solid #E4E8F2;
+    box-shadow: 0 2px 6px rgba(11, 31, 58, 0.06);
+  }
+  .pc-quiz-option-id {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 11px;
+    color: #5C6679;
+  }
+  .pc-quiz-option.selected {
+    border: 2px solid #3346E0;
+    box-shadow: 0 0 0 3px rgba(51, 70, 224, 0.12);
+  }
+  .pc-quiz-option.selected .pc-quiz-option-id { color: #3346E0; }
+
+  .pc-quiz-option-text {
+    background: #F6F8FC;
+    color: #2B3344;
+    font-family: 'Source Sans 3', sans-serif;
+  }
+  .pc-quiz-option-hint {
+    font-family: 'Source Sans 3', sans-serif;
+    color: #5C6679;
+  }
+
+  /* Result banner */
+  .pc-result-banner {
+    font-family: 'Source Sans 3', sans-serif;
+  }
+  .pc-result-banner.correct   { background: #1FA677; }
+  .pc-result-banner.incorrect { background: #D44C4C; }
+
+  .pc-quiz-option.opt-correct { border: 2px solid #1FA677; background: #E6F5EE; }
+  .pc-quiz-option.opt-correct .pc-quiz-option-id { color: #1FA677; }
+  .pc-quiz-option.opt-wrong   { border: 2px solid #D44C4C; background: #FBEAEA; }
+  .pc-quiz-option.opt-wrong   .pc-quiz-option-id { color: #D44C4C; }
+
+  /* RCTF chips on the match question — keep concept colors,
+     refine borders/typography to match the rest of the design system. */
+  .pc-rctf-chip {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 700;
+  }
+  .pc-rctf-chip .pc-rctf-letter {
+    font-family: 'Source Serif 4', 'Source Serif Pro', Georgia, serif;
+    font-weight: 700;
+  }
+
+  /* Match-row revealed answer */
+  .pc-match-answer-text {
+    background: #FFFFFF;
+    border: 1px solid #E4E8F2;
+    color: #2B3344;
+    font-family: 'Source Sans 3', sans-serif;
+  }
+  .pc-match-row.match-correct .pc-match-answer-text {
+    border-color: #1FA677; background: #E6F5EE;
+  }
+  .pc-match-row.match-wrong .pc-match-answer-text {
+    border-color: #D44C4C; background: #FBEAEA;
+  }
+  .pc-match-row.match-correct .pc-match-tick { color: #1FA677; }
+  .pc-match-row.match-wrong   .pc-match-tick { color: #D44C4C; }
+
+  /* Explanation card */
+  .pc-explanation {
+    background: #FFFFFF;
+    border: 1px solid #E4E8F2;
+    box-shadow: 0 2px 6px rgba(11, 31, 58, 0.06);
+  }
+  .pc-explanation-title {
+    font-family: 'Source Serif 4', 'Source Serif Pro', Georgia, serif;
+    color: #0B1F3A;
+    font-weight: 700;
+  }
+  .pc-explanation-row {
+    font-family: 'Source Sans 3', sans-serif;
+  }
+  .pc-explanation-text { color: #2B3344; }
+  .pc-explanation-note {
+    color: #5C6679;
+    border-top: 1px solid #E4E8F2;
+  }
+  /* RCTF label colors — exact tones from the design system */
+  .pc-label-role    { color: #5581F0; }
+  .pc-label-context { color: #1FA677; }
+  .pc-label-task    { color: #D44C4C; }
+  .pc-label-format  { color: #C99509; }
+
+  /* Match-board prompt hint */
+  .pc-match-hint {
+    font-family: 'Source Sans 3', sans-serif;
+    font-style: italic;
+    color: #5C6679;
+  }
+</style>
 <script>
   var QUESTION_TYPE = "{{ question.type }}";
   var ANSWERED = {{ 'true' if answered else 'false' }};

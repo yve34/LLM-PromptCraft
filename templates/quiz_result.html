@@ -3,11 +3,123 @@
 {% block title %}PromptCraft — Quiz Complete!{% endblock %}
 {% block nav_right %}Quiz Complete!{% endblock %}
 
+{% block head_extra %}
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  /* HW11 quiz-result overrides — final quiz screen.
+     Same design tokens as the rest of the product. RCTF accent colors are
+     preserved on the four pills because they are framework concepts, not
+     decoration. */
+
+  body { font-family: 'Source Sans 3', sans-serif; color: #2B3344; }
+
+  .pc-navbar { background: #0B1F3A; }
+  .pc-navbar-right { font-family: 'Source Sans 3', sans-serif; }
+
+  .pc-quiz-result h1 {
+    font-family: 'Source Serif 4', 'Source Serif Pro', Georgia, serif !important;
+    font-size: 44px !important;
+    line-height: 52px !important;
+    font-weight: 700 !important;
+    color: #0B1F3A;
+  }
+  .pc-quiz-result h1 .pc-check { color: #1FA677; }
+
+  .pc-quiz-result .lead {
+    font-family: 'Source Sans 3', sans-serif;
+    color: #2B3344;
+  }
+
+  /* Score card — refined indigo numerals on white */
+  .pc-result-score {
+    background: #FFFFFF;
+    border: 1px solid #E4E8F2;
+    box-shadow: 0 6px 18px rgba(11, 31, 58, 0.08);
+    border-radius: 10px;
+  }
+  .pc-result-score-num {
+    font-family: 'Source Serif 4', 'Source Serif Pro', Georgia, serif;
+    color: #3346E0;
+  }
+  .pc-result-score-sep { color: #C2CEF0; }
+  .pc-result-score-total {
+    font-family: 'Source Serif 4', 'Source Serif Pro', Georgia, serif;
+    color: #0B1F3A;
+  }
+
+  /* RCTF pills (framework recap) — concept colors preserved,
+     pulled to design-system hex values. */
+  .pc-rctf-pill .circle {
+    font-family: 'Source Serif 4', 'Source Serif Pro', Georgia, serif;
+    font-weight: 700;
+  }
+  .pc-circle-role    { background: #5581F0; }
+  .pc-circle-context { background: #1FA677; }
+  .pc-circle-task    { background: #D44C4C; }
+  .pc-circle-format  { background: #C99509; }
+  .pc-rctf-name {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+    color: #0B1F3A;
+  }
+
+  .pc-result-tagline {
+    font-family: 'Source Sans 3', sans-serif;
+    color: #5C6679;
+  }
+  .pc-result-tagline strong { color: #0B1F3A; font-weight: 700; }
+
+  /* Per-question breakdown */
+  .pc-result-breakdown {
+    background: #FFFFFF;
+    border: 1px solid #E4E8F2;
+    box-shadow: 0 2px 6px rgba(11, 31, 58, 0.06);
+    border-radius: 8px;
+  }
+  .pc-result-breakdown-title {
+    font-family: 'Source Serif 4', 'Source Serif Pro', Georgia, serif;
+    color: #0B1F3A;
+    font-weight: 700;
+  }
+  .pc-result-breakdown-list li.is-correct { background: #E6F5EE; }
+  .pc-result-breakdown-list li.is-wrong   { background: #FBEAEA; }
+  .pc-result-q { color: #0B1F3A; font-family: 'Source Sans 3', sans-serif; }
+  .pc-result-breakdown-list li.is-correct .pc-result-tick { color: #1FA677; }
+  .pc-result-breakdown-list li.is-wrong   .pc-result-tick { color: #D44C4C; }
+  .pc-result-pick {
+    color: #5C6679;
+    font-family: 'Source Sans 3', sans-serif;
+  }
+
+  /* Buttons — match home + learn */
+  .pc-quiz-result .btn-pc-primary {
+    background: #3346E0;
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+    min-width: 220px;
+  }
+  .pc-quiz-result .btn-pc-primary:hover { background: #2535c8; }
+
+  .pc-quiz-result .btn-outline-secondary {
+    border: 1px solid #C2CEF0;
+    color: #2B3344;
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+    min-width: 180px;
+  }
+  .pc-quiz-result .btn-outline-secondary:hover {
+    background: #E4E8F2;
+    color: #0B1F3A;
+    border-color: #C2CEF0;
+  }
+</style>
+{% endblock %}
+
 {% block content %}
 {#
   ── Eric's part ──────────────────────────────────────────────────────────
-  Owner : Eric  (eric/quiz-ui branch)
-  Page  : Final score / result screen   (lo-fi p.19)
+  Owner : Eric  (eric/hw11-quiz-graphic-design branch)
+  Page  : Final score / result screen — HW11 graphic design applied
   Data  : score (int), total (int), answers (list of dicts)
             each answer: { question, selected, is_correct, ts }
   ─────────────────────────────────────────────────────────────────────────
