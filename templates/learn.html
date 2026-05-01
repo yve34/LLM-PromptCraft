@@ -106,18 +106,81 @@
     font-family: 'Source Sans 3', sans-serif;
     font-weight: 600;
   }
-  .pc-build-option {
-    font-family: 'Source Sans 3', sans-serif;
-  }
   .pc-note-banner {
     background: #E4E8F2;
     border: 1px solid #C2CEF0;
     color: #0B1F3A;
     font-family: 'Source Sans 3', sans-serif;
   }
+
+  /* HW11 polish (Vishal) — RCTF-tinted Build-A-Prompt cards.
+     Goals: (1) options stay neutral until clicked so the answer
+     isn't telegraphed by color; (2) once selected, the card glows
+     in that row's RCTF concept color; (3) the assembled prompt
+     reads as a built artifact, not a flat list. */
+
+  /* Row tags — fix the .role double-bg bug & apply serif headline */
+  .pc-build-tag {
+    font-family: 'Source Serif 4', 'Source Serif Pro', Georgia, serif;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+  .pc-build-tag.role    { background: #DCE4FA; color: #5581F0; }
+  .pc-build-tag.context { background: #D5EFE2; color: #1FA677; }
+  .pc-build-tag.task    { background: #F8DDDB; color: #D44C4C; }
+  .pc-build-tag.format  { background: #FAEFC2; color: #C99509; }
+
+  /* Option cards — neutral default (overrides the give-away-the-answer
+     green tint that styles.css applied to .correct) */
+  .pc-build-option,
+  .pc-build-option.correct {
+    font-family: 'Source Sans 3', sans-serif;
+    background: #FFFFFF;
+    border: 1px solid #E4E8F2;
+    box-shadow: 0 1px 2px rgba(11,31,58,0.04);
+    color: #2B3344;
+  }
+  .pc-build-option:hover {
+    border-color: #C2CEF0;
+    box-shadow: 0 3px 8px rgba(11,31,58,0.08);
+  }
+  .pc-build-option .opt-id { color: #5C6679; font-weight: 700; }
+  .pc-build-option .note   { color: #5C6679; }
+
+  /* Selected state — concept color = answer choice */
+  .pc-build-option.selected {
+    outline: none !important;
+    border-width: 2px;
+    box-shadow: 0 4px 14px rgba(11,31,58,0.10);
+  }
+  .pc-build-row[data-key="role"]    .pc-build-option.selected { border-color: #5581F0; background: #F4F7FE; }
+  .pc-build-row[data-key="context"] .pc-build-option.selected { border-color: #1FA677; background: #F0FAF4; }
+  .pc-build-row[data-key="task"]    .pc-build-option.selected { border-color: #D44C4C; background: #FCF3F2; }
+  .pc-build-row[data-key="format"]  .pc-build-option.selected { border-color: #C99509; background: #FCF7E6; }
+
+  /* Assembled prompt — card-with-chips, reads as a built artifact */
+  .pc-assembled {
+    background: #FFFFFF;
+    border: 1px solid #E4E8F2;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(11,31,58,0.08);
+    padding: 28px 32px;
+  }
+  .pc-assembled .row-item {
+    background: #F7F8FB;
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+  .pc-assembled .row-item .circle {
+    width: 36px;
+    height: 36px;
+    font-size: 1.05rem;
+  }
   .pc-assembled .row-item .final-text {
     font-family: 'Source Sans 3', sans-serif;
     color: #2B3344;
+    line-height: 1.5;
   }
 </style>
 {% endblock %}
