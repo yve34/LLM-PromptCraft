@@ -2,10 +2,10 @@
 
 ## Team Members
 
-- Yve Hu — [yve34](https://github.com/yve34)
-- Shubham Prashar — [oyeprashar](https://github.com/oyeprashar)
-- Vishal — [vishaldubey01](https://github.com/vishaldubey01)
-- Eric — [ericyangchen](https://github.com/ericyangchen)
+- Yve Hu, yh3848 — [yve34](https://github.com/yve34)
+- Shubham Prashar, sp4540 — [oyeprashar](https://github.com/oyeprashar)
+- Vishal Dubey, vd2468 — [vishaldubey01](https://github.com/vishaldubey01)
+- Yang-Jung(Eric) Chen, yc4670 — [ericyangchen](https://github.com/ericyangchen)
 
 HW10 Technical Prototype — a 10-minute interactive lesson that teaches the
 **RCTF** framework (Role / Context / Task / Format) for writing effective LLM
