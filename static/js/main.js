@@ -44,7 +44,7 @@ $(function () {
             var $row = $(this);
             var key  = $row.data('key');
             var pick = selections[key];
-            var text = $row.find('.opt-text[data-id="' + pick + '"]').text();
+            var text = $('#build-prompt-board .pc-build-row[data-key="' + key + '"] .opt-text[data-id="' + pick + '"]').text();
             $row.find('.final-text').text(text);
         });
         $assembled.addClass('visible');
